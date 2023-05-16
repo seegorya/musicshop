@@ -1,0 +1,56 @@
+﻿@model IEnumerable<mozzhhevelnik.Models.ordetails>
+
+@{
+    ViewBag.Title = "Order details";
+}
+@helper Truncate(string
+input, int length)
+{
+if (input.Length <= length)
+{
+        @input
+}
+else
+{
+        @input.Substring(0, length)<text>...</text>
+}
+}
+
+<h2>Details</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.disks.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.order.data)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.amount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.price)
+        </td>
+        <td>
+            @Truncate(item.disks.name, 25)
+        </td>
+        <td>
+            @Truncate(item.order.data, 25)
+        </td>
+    </tr>
+}
+
+</table>
+@Html.ActionLink("Back to history", "Index", "orders")

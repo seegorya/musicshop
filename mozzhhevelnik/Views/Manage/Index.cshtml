@@ -1,0 +1,25 @@
+﻿@model mozzhhevelnik.Models.IndexViewModel
+@{
+    ViewBag.Title = "Management";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div>
+    <h4>Change your account</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Password:</dt>
+        <dd>
+            @if (Model.HasPassword)
+            {
+                @Html.ActionLink("Password change", "ChangePassword")
+            }
+            else
+            {
+                @Html.ActionLink("Create", "SetPassword")
+            }            
+        </dd>        
+    </dl>
+</div>

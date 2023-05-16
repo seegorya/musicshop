@@ -1,0 +1,475 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище salondtbModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="customers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="login" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="contacts" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="delivery" Type="varchar" MaxLength="50" />
+          <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="disks">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="genre" Type="varchar" MaxLength="50" />
+          <Property Name="singer" Type="varchar" MaxLength="50" />
+          <Property Name="year" Type="varchar" MaxLength="50" />
+          <Property Name="price" Type="float" Nullable="false" />
+          <Property Name="cover" Type="varbinary" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="order">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userid" Type="int" Nullable="false" />
+          <Property Name="data" Type="nchar" MaxLength="10" />
+          <Property Name="summ" Type="float" />
+        </EntityType>
+        <EntityType Name="ordetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ordid" Type="int" Nullable="false" />
+          <Property Name="cdid" Type="int" Nullable="false" />
+          <Property Name="amount" Type="int" Nullable="false" />
+          <Property Name="price" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="supplier">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="country" Type="varchar" MaxLength="50" />
+          <Property Name="desc" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="supplyment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="supid" Type="int" Nullable="false" />
+          <Property Name="cdid" Type="int" Nullable="false" />
+          <Property Name="amount" Type="int" Nullable="false" />
+          <Property Name="summ" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_order_customers">
+          <End Role="customers" Type="Self.customers" Multiplicity="1" />
+          <End Role="order" Type="Self.order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ordetails_disks">
+          <End Role="disks" Type="Self.disks" Multiplicity="1" />
+          <End Role="ordetails" Type="Self.ordetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="disks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ordetails">
+              <PropertyRef Name="cdid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ordetails_order">
+          <End Role="order" Type="Self.order" Multiplicity="1" />
+          <End Role="ordetails" Type="Self.ordetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="order">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ordetails">
+              <PropertyRef Name="ordid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_supplyment_disks">
+          <End Role="disks" Type="Self.disks" Multiplicity="1" />
+          <End Role="supplyment" Type="Self.supplyment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="disks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="supplyment">
+              <PropertyRef Name="cdid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_supplyment_supplier">
+          <End Role="supplier" Type="Self.supplier" Multiplicity="1" />
+          <End Role="supplyment" Type="Self.supplyment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="supplier">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="supplyment">
+              <PropertyRef Name="supid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="Insert_User" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="login" Type="nvarchar" Mode="In" />
+          <Parameter Name="contact" Type="nvarchar" Mode="In" />
+          <Parameter Name="password" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="InSumm" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="summ" Type="float" Mode="In" />
+        </Function>
+        <Function Name="LoginByUsernamePassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="login" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="PlacePrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ordid" Type="int" Mode="In" />
+          <Parameter Name="cdid" Type="int" Mode="In" />
+          <Parameter Name="amount" Type="int" Mode="In" />
+          <Parameter Name="price" Type="float" Mode="In" />
+        </Function>
+        <Function Name="selectId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="login" Type="varchar" Mode="In" />
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="Хранилище salondtbModelContainer">
+          <EntitySet Name="customers" EntityType="Self.customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="disks" EntityType="Self.disks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="order" EntityType="Self.order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ordetails" EntityType="Self.ordetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="supplier" EntityType="Self.supplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="supplyment" EntityType="Self.supplyment" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_order_customers" Association="Self.FK_order_customers">
+            <End Role="customers" EntitySet="customers" />
+            <End Role="order" EntitySet="order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ordetails_disks" Association="Self.FK_ordetails_disks">
+            <End Role="disks" EntitySet="disks" />
+            <End Role="ordetails" EntitySet="ordetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ordetails_order" Association="Self.FK_ordetails_order">
+            <End Role="order" EntitySet="order" />
+            <End Role="ordetails" EntitySet="ordetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_supplyment_disks" Association="Self.FK_supplyment_disks">
+            <End Role="disks" EntitySet="disks" />
+            <End Role="supplyment" EntitySet="supplyment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_supplyment_supplier" Association="Self.FK_supplyment_supplier">
+            <End Role="supplier" EntitySet="supplier" />
+            <End Role="supplyment" EntitySet="supplyment" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="salondtbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="customers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="contacts" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="delivery" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="order1" Relationship="salondtbModel.FK_order_customers1" FromRole="customers" ToRole="order" />
+        </EntityType>
+        <EntityType Name="disks">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="genre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="singer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="year" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="price" Type="Double" Nullable="false" />
+          <Property Name="cover" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="ordetails" Relationship="Self.FK_ordetails_disks" FromRole="disks" ToRole="ordetails" />
+          <NavigationProperty Name="supplyment" Relationship="Self.FK_supplyment_disks" FromRole="disks" ToRole="supplyment" />
+        </EntityType>
+        <EntityType Name="order">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userid" Type="Int32" Nullable="false" />
+          <Property Name="data" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="summ" Type="Double" />
+          <NavigationProperty Name="ordetails" Relationship="Self.FK_ordetails_order" FromRole="order" ToRole="ordetails" />
+          <NavigationProperty Name="customers1" Relationship="salondtbModel.FK_order_customers1" FromRole="order" ToRole="customers" />
+        </EntityType>
+        <EntityType Name="ordetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ordid" Type="Int32" Nullable="false" />
+          <Property Name="cdid" Type="Int32" Nullable="false" />
+          <Property Name="amount" Type="Int32" Nullable="false" />
+          <Property Name="price" Type="Double" Nullable="false" />
+          <NavigationProperty Name="disks" Relationship="Self.FK_ordetails_disks" FromRole="ordetails" ToRole="disks" />
+          <NavigationProperty Name="order" Relationship="Self.FK_ordetails_order" FromRole="ordetails" ToRole="order" />
+        </EntityType>
+        <EntityType Name="supplier">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="desc" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="supplyment" Relationship="Self.FK_supplyment_supplier" FromRole="supplier" ToRole="supplyment" />
+        </EntityType>
+        <EntityType Name="supplyment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="supid" Type="Int32" Nullable="false" />
+          <Property Name="cdid" Type="Int32" Nullable="false" />
+          <Property Name="amount" Type="Int32" Nullable="false" />
+          <Property Name="summ" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="disks" Relationship="Self.FK_supplyment_disks" FromRole="supplyment" ToRole="disks" />
+          <NavigationProperty Name="supplier" Relationship="Self.FK_supplyment_supplier" FromRole="supplyment" ToRole="supplier" />
+        </EntityType>
+        <Association Name="FK_ordetails_disks">
+          <End Role="disks" Type="Self.disks" Multiplicity="1" />
+          <End Role="ordetails" Type="Self.ordetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="disks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ordetails">
+              <PropertyRef Name="cdid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_supplyment_disks">
+          <End Role="disks" Type="Self.disks" Multiplicity="1" />
+          <End Role="supplyment" Type="Self.supplyment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="disks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="supplyment">
+              <PropertyRef Name="cdid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ordetails_order">
+          <End Role="order" Type="Self.order" Multiplicity="1" />
+          <End Role="ordetails" Type="Self.ordetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="order">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ordetails">
+              <PropertyRef Name="ordid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_supplyment_supplier">
+          <End Role="supplier" Type="Self.supplier" Multiplicity="1" />
+          <End Role="supplyment" Type="Self.supplyment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="supplier">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="supplyment">
+              <PropertyRef Name="supid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="salondtbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="customers" EntityType="Self.customers" />
+          <EntitySet Name="disks" EntityType="Self.disks" />
+          <EntitySet Name="order" EntityType="Self.order" />
+          <EntitySet Name="ordetails" EntityType="Self.ordetails" />
+          <EntitySet Name="supplier" EntityType="Self.supplier" />
+          <EntitySet Name="supplyment" EntityType="Self.supplyment" />
+          <AssociationSet Name="FK_ordetails_disks" Association="Self.FK_ordetails_disks">
+            <End Role="disks" EntitySet="disks" />
+            <End Role="ordetails" EntitySet="ordetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_supplyment_disks" Association="Self.FK_supplyment_disks">
+            <End Role="disks" EntitySet="disks" />
+            <End Role="supplyment" EntitySet="supplyment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ordetails_order" Association="Self.FK_ordetails_order">
+            <End Role="order" EntitySet="order" />
+            <End Role="ordetails" EntitySet="ordetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_supplyment_supplier" Association="Self.FK_supplyment_supplier">
+            <End Role="supplier" EntitySet="supplier" />
+            <End Role="supplyment" EntitySet="supplyment" />
+          </AssociationSet>
+          <FunctionImport Name="Insert_User" ReturnType="Collection(Int32)">
+            <Parameter Name="login" Mode="In" Type="String" />
+            <Parameter Name="contact" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="LoginByUsernamePassword" ReturnType="Collection(salondtbModel.LoginByUsernamePassword_Result)">
+            <Parameter Name="login" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PlacePrder">
+            <Parameter Name="ordid" Mode="In" Type="Int32" />
+            <Parameter Name="cdid" Mode="In" Type="Int32" />
+            <Parameter Name="amount" Mode="In" Type="Int32" />
+            <Parameter Name="price" Mode="In" Type="Double" />
+          </FunctionImport>
+          <FunctionImport Name="InSumm">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="summ" Mode="In" Type="Double" />
+          </FunctionImport>
+          <FunctionImport Name="selectId">
+            <Parameter Name="login" Mode="In" Type="String" />
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <AssociationSet Name="FK_order_customers1" Association="salondtbModel.FK_order_customers1">
+            <End Role="customers" EntitySet="customers" />
+            <End Role="order" EntitySet="order" />
+          </AssociationSet>
+        </EntityContainer>
+        <ComplexType Name="LoginByUsernamePassword_Result">
+          <Property Type="String" Name="login" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="password" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <Association Name="FK_order_customers1">
+          <End Type="salondtbModel.customers" Role="customers" Multiplicity="1" />
+          <End Type="salondtbModel.order" Role="order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище salondtbModelContainer" CdmEntityContainer="salondtbEntities">
+          <EntitySetMapping Name="customers">
+            <EntityTypeMapping TypeName="salondtbModel.customers">
+              <MappingFragment StoreEntitySet="customers">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="contacts" ColumnName="contacts" />
+                <ScalarProperty Name="delivery" ColumnName="delivery" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="disks">
+            <EntityTypeMapping TypeName="salondtbModel.disks">
+              <MappingFragment StoreEntitySet="disks">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="genre" ColumnName="genre" />
+                <ScalarProperty Name="singer" ColumnName="singer" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="cover" ColumnName="cover" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="order">
+            <EntityTypeMapping TypeName="salondtbModel.order">
+              <MappingFragment StoreEntitySet="order">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="data" ColumnName="data" />
+                <ScalarProperty Name="summ" ColumnName="summ" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ordetails">
+            <EntityTypeMapping TypeName="salondtbModel.ordetails">
+              <MappingFragment StoreEntitySet="ordetails">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ordid" ColumnName="ordid" />
+                <ScalarProperty Name="cdid" ColumnName="cdid" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="price" ColumnName="price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="supplier">
+            <EntityTypeMapping TypeName="salondtbModel.supplier">
+              <MappingFragment StoreEntitySet="supplier">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="country" ColumnName="country" />
+                <ScalarProperty Name="desc" ColumnName="desc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="supplyment">
+            <EntityTypeMapping TypeName="salondtbModel.supplyment">
+              <MappingFragment StoreEntitySet="supplyment">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="supid" ColumnName="supid" />
+                <ScalarProperty Name="cdid" ColumnName="cdid" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="summ" ColumnName="summ" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Insert_User" FunctionName="Хранилище salondtbModel.Insert_User" />
+          <FunctionImportMapping FunctionImportName="LoginByUsernamePassword" FunctionName="Хранилище salondtbModel.LoginByUsernamePassword">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="salondtbModel.LoginByUsernamePassword_Result">
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PlacePrder" FunctionName="Хранилище salondtbModel.PlacePrder" />
+          <FunctionImportMapping FunctionImportName="InSumm" FunctionName="Хранилище salondtbModel.InSumm" />
+          <FunctionImportMapping FunctionImportName="selectId" FunctionName="Хранилище salondtbModel.selectId" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

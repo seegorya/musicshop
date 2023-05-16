@@ -1,0 +1,94 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    background-color: rgba(250, 220, 255, 0.53);
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top:20px;
+   
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.centermenu {
+	position: absolute;	
+	margin: 0;
+}
+
+#mainmenu{
+    margin-bottom: 50px;
+    margin-top: 20px;
+    padding-left:20%;
+}
+
+#links
+{
+    width: 100%;
+	position: absolute;
+	display: inline-block;
+	background-color: #f075ff;
+	height:60px;
+    width: 60%;
+	z-index: 10000;
+	text-align: center;
+}
+
+ul#navi {
+	list-style-type: none;
+	margin: auto;
+	padding: 3px;
+	}
+	
+ul#navi li {
+	float:left;
+	margin: 10px 3px 0 0;
+	padding: 0;
+	}
+	
+ul#navi li a {
+	display: block;
+	float: left;
+	width:100px;
+	height: 35px;
+	line-height: 35px;
+	color: #fff;
+	background: transparent;
+	text-decoration: none;
+	text-align: center;
+	text-transform: uppercase;	
+	}
+	
+ul#navi li a {
+	float: none;
+	}
+	
+ul#navi li a:hover {
+	background-color: #ca00e3;
+	color: #fff;
+}
+
+ul#navi li a:focus {
+	background-color: #e300ff;
+	color: #fff;
+}
+
+.active {
+    background-color: #e300ff;
+    height: 35px;
+}

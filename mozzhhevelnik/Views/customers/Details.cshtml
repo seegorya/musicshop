@@ -1,0 +1,42 @@
+﻿@model mozzhhevelnik.Models.customers
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>customers</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.login)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.login)
+        </dd>
+
+        <dt>
+            name
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.contacts)
+        </dd>
+
+        <dt>
+            contact info
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.delivery)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

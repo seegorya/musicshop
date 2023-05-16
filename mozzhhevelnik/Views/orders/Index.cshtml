@@ -1,0 +1,50 @@
+﻿@model IEnumerable<mozzhhevelnik.Models.order>
+
+@{
+    ViewBag.Title = "Purchases";
+}
+
+<h2>Purchases</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.data)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.summ)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.customers1.login)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.data)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.summ)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.customers1.login)
+        </td>
+        @if (User.Identity.Name == "administrator@mozzhhevelnik.ru")
+        {
+        <td>            
+            @Html.ActionLink("Details", "Index", "ordetails", new { id = item.id }, null) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.id })
+        </td>
+        }
+        else
+        {
+            <td>
+                @Html.ActionLink("Details", "Index", "ordetails", new { id = item.id }, null)
+            </td>
+        }
+    </tr>
+}
+
+</table>

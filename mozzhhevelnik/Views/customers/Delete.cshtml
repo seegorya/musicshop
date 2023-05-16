@@ -1,0 +1,56 @@
+﻿@model mozzhhevelnik.Models.customers
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this customer?</h3>
+<div>
+    <h4>customers</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.login)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.login)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.contacts)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.contacts)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.delivery)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.delivery)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.password)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

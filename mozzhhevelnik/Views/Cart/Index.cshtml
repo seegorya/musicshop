@@ -1,0 +1,53 @@
+﻿@model mozzhhevelnik.Models.CartIndexViewModel
+
+@{
+    ViewBag.Title = "Your cart";
+}
+
+<h2>Your cart</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Amount</th>
+            <th>Record</th>
+            <th class="text-right">Price</th>
+            <th class="text-right">Sum</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var line in Model.Cart.Lines)
+        {
+            <tr>
+                <td class="text-center">@line.Quantity</td>
+                <td class="text-left">@line.disk.name</td>
+                <td class="text-right">@line.disk.price.ToString("# RUB")</td>
+                <td class="text-right">
+                    @((line.Quantity * line.disk.price).ToString("# RUB"))
+                </td>
+                <td>
+                    @using (Html.BeginForm("RemoveFromCart", "Cart"))
+                    {
+                        @Html.Hidden("iid", line.disk.id)
+                        @Html.HiddenFor(x => x.ReturnUrl)
+                        <input class="btn btn-sm btn-warning" type="submit" value="Remove from cart" />
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3" class="text-right">Overall:</td>
+            <td class="text-right">
+                @Model.Cart.ComputeTotalValue().ToString("# RUB")
+            </td>
+        </tr>
+    </tfoot>
+</table>
+<div class="text-center">
+    <a class="btn btn-primary" href="@Model.ReturnUrl">Continue shopping</a>
+    @if (@Model.Cart.ComputeTotalValue() > 0)
+    {
+        @Html.ActionLink("Place order", "Checkout", null, new { @class = "btn btn-primary" })
+    }
+</div>

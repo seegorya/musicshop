@@ -1,0 +1,115 @@
+﻿@model IEnumerable<mozzhhevelnik.Models.disks>
+
+@{
+    ViewBag.Title = "Catalog";
+}
+
+<h2>Catalog</h2>
+
+@if (User.Identity.Name == "administrator@mozzhhevelnik.ru")
+{
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+}
+else if (!User.Identity.IsAuthenticated)
+{
+ @Html.ActionLink("Log in to shop", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+}
+
+@using (Html.BeginForm())
+{
+    <p>
+        Find by title or singer: @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>
+}
+
+@using (Html.BeginForm())
+{
+    <p>
+        Find by genre: @Html.TextBox("SearchString1")
+        <input type="submit" value="Search" />
+    </p>
+}
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("record name", "Index", new { sortOrder = ViewBag.NameSortParm })
+        </th>
+        <th>
+            @Html.ActionLink("genre", "Index", new { sortOrder = ViewBag.DateSortParm })
+        </th>
+        <th>
+           @Html.ActionLink("singer", "Index", new { sortOrder = ViewBag.TeSortParm })
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.year)
+        </th>
+        <th>
+            @Html.ActionLink("price", "Index", new { sortOrder = ViewBag.AteSortParm })
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cover)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.genre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.singer)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.year)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.price)
+        </td>
+        <td>
+            @{ byte[] photo = item.cover;
+                string imageSrc = null;
+                if (photo != null)
+                {
+                    MemoryStream ms = new MemoryStream();
+                    ms.Write(photo, 0, photo.Length);
+                    string imageBase64 = Convert.ToBase64String(ms.ToArray());
+                    imageSrc = string.Format("data:image/jpg;base64,{0}", imageBase64);
+                    string base64String = Convert.ToBase64String(photo, 0, photo.Length);
+                }
+            }
+
+            <img src="@imageSrc" alt="Image" height="100" width="100" />
+
+        </td>
+            @if (User.Identity.Name == "administrator@mozzhhevelnik.ru")
+            {
+                <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.id })     
+                </td>
+            }
+            else if (User.Identity.IsAuthenticated)
+            {
+                <td>
+                @using (Html.BeginForm("AddToCart", "Cart"))
+                {
+                        @Html.HiddenFor(modelItem => item.id, new { Name = "iid" })
+                        @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                        <input type="submit" class="btn btn-success" value="Add to cart" />
+                }
+               </td>
+            }
+    </tr>
+}
+
+</table>

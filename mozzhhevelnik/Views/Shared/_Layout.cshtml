@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Mozzhhevelnik", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Terms of service", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contacts", "Contact", "Home")</li>
+                    <li>@Html.Action("Summary", "Cart")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+
+
+        <div id="mainmenu">
+            <p class="lead">Welcome!</p>
+            @using System.Web.Mvc.Html;
+            <div id="links" class="centermenu">
+                <ul id="navi">
+                    <li @CurrentItem("Home")>
+                    @Html.ActionLink("Home", "Index", "Home")<br />
+                    </li>
+                    <li @CurrentItem("disks")>
+                        @Html.ActionLink("Catalog", "Index", "disks")<br />
+                    </li>
+                    @if (User.Identity.Name == "administrator@mozzhhevelnik.ru")
+                    {
+                        
+                                            <li @CurrentItem("labels and plans")>
+                                                @Html.ActionLink("Supplies", "Index", "supplyments")<br />
+                                            </li>
+                                            <li @CurrentItem("orders")>
+                                                @Html.ActionLink("Orders", "Index", "orders")<br />
+                                            </li>
+                                            <li @CurrentItem("customers")>
+                                                @Html.ActionLink("Customers", "Index", "customers")<br />
+                                            </li>
+                    }
+                    else if (User.Identity.IsAuthenticated)
+                        {                   <li @CurrentItem("orders")>
+                                                @Html.ActionLink("History", "Index", "orders")<br />
+                                            </li>
+                                            <li>                                               
+                                                @Html.ActionLink("My profile", "Index", "customers") <br />                                               
+                                            </li>
+                            }
+                </ul>
+            </div>
+        </div>
+
+        @helper CurrentItem(String item)
+        {
+if (item == ViewContext.RouteData.Values["controller"].ToString())
+{
+        @:class="active"
+    }
+}
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+    </div>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+</body>
+
+</html>

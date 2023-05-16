@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ad132cc58bcf4f61bdaab53412e86f4c" Name="Diagram1">
+        <EntityTypeShape EntityType="salondtbModel.customers" Width="1.5" PointX="1.5" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="salondtbModel.disks" Width="1.5" PointX="0.75" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="salondtbModel.order" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="salondtbModel.ordetails" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="salondtbModel.supplier" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="salondtbModel.supplyment" Width="1.5" PointX="6" PointY="3.5" IsExpanded="true" />
+        <AssociationConnector Association="salondtbModel.FK_ordetails_disks" ManuallyRouted="false" />
+        <AssociationConnector Association="salondtbModel.FK_supplyment_disks" ManuallyRouted="false" />
+        <AssociationConnector Association="salondtbModel.FK_ordetails_order" ManuallyRouted="false" />
+        <AssociationConnector Association="salondtbModel.FK_supplyment_supplier" ManuallyRouted="false" />
+        <AssociationConnector Association="salondtbModel.FK_order_customers1" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

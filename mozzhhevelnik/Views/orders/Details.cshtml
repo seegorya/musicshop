@@ -1,0 +1,42 @@
+﻿@model mozzhhevelnik.Models.order
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>order</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.data)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.data)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.summ)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.summ)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.customers1.login)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.customers1.login)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

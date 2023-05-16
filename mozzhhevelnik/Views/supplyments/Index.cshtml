@@ -1,0 +1,68 @@
+﻿@model IEnumerable<mozzhhevelnik.Models.supplyment>
+
+@{
+    ViewBag.Title = "Supplyments";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.summ)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.disks.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.supplier.name)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.summ)
+            </td>
+            <td>
+                @Truncate(item.disks.name, 25)
+            </td>
+            <td>
+                @Truncate(item.supplier.name, 25)
+            </td>
+            @if (User.Identity.Name == "administrator@mozzhhevelnik.ru")
+            {
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                </td>
+            }
+        </tr>
+    }
+
+</table>
+
+@helper Truncate(string
+input, int length)
+{
+if (input.Length <= length)
+{
+        @input
+}
+else
+{
+        @input.Substring(0, length)<text>...</text>
+}
+}
